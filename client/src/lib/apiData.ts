@@ -685,26 +685,36 @@ export const apiData: ApiCategory[] = [
           { field: "EquipmentHeader.OEM", type: "String", description: "Fabricante do equipamento", example: '"Hitachi"', pragmaticUse: "Identificação do fabricante" },
           { field: "EquipmentHeader.Model", type: "String", description: "Modelo do equipamento", example: '"ZX210"', pragmaticUse: "Detalhes técnicos do modelo" },
           { field: "EquipmentHeader.SerialNumber", type: "String", description: "Número de série", example: '"HCMZX210XXXXXXX"', pragmaticUse: "Rastreamento único do ativo" },
+          { field: "EquipmentHeader.UnitInstallDateTime", type: "DateTime", description: "[ISO 15143-3] Data de instalação da unidade telemática", example: '"2022-01-15T10:30:00Z"', pragmaticUse: "Cálculo de cobertura de dados históricos e validade do dispositivo" },
           { field: "Location.Latitude", type: "Double", description: "Latitude atual do equipamento", example: "34.5678", pragmaticUse: "Posicionamento geográfico em mapa" },
           { field: "Location.Longitude", type: "Double", description: "Longitude atual do equipamento", example: "-118.1234", pragmaticUse: "Posicionamento geográfico em mapa" },
           { field: "Location.Altitude", type: "Double", description: "Altitude em metros", example: "500.0", pragmaticUse: "Análise de terreno e elevação" },
           { field: "Location.Timestamp", type: "DateTime", description: "Data/hora da leitura de localização", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Validação da atualidade dos dados de posição" },
+          { field: "EngineStatus.Running", type: "Boolean", description: "[ISO 15143-3] Motor ligado/desligado", example: "true", pragmaticUse: "Detecção de ciclos on/off e cálculo de horas reais vs. tempo conectado" },
           { field: "CumulativeOperatingHours.Hour", type: "Double", description: "Total de horas de operação acumuladas", example: "1234.5", pragmaticUse: "Cálculo de intervalos de manutenção preventiva" },
           { field: "CumulativeOperatingHours.Timestamp", type: "DateTime", description: "Data/hora da leitura de horas", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Registro da última atualização do horímetro" },
           { field: "CumulativeIdleHours.Hour", type: "Double", description: "Total de horas de inatividade acumuladas", example: "50.2", pragmaticUse: "Análise de eficiência — identificação de períodos ociosos" },
           { field: "CumulativeIdleHours.Timestamp", type: "DateTime", description: "Data/hora da leitura de horas ociosas", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Registro da última atualização de horas ociosas" },
+          { field: "CumulativeIdleNonOperatingHours.Hour", type: "Double", description: "[ISO 15143-3] Horas com motor ligado mas sem carga (não operando)", example: "15.5", pragmaticUse: "Distinção entre idle (parado) e non-operating (motor ligado sem trabalho)" },
+          { field: "CumulativeActiveRegenerationHours.Hour", type: "Double", description: "[ISO 15143-3] Horas de regeneração ativa do filtro de partículas (DPF)", example: "8.2", pragmaticUse: "Crítico para Tier 4/Stage V — regeneração excessiva indica problema no DPF" },
+          { field: "CumulativePowerTakeOffHours.Hour", type: "Double", description: "[ISO 15143-3] Horas de operação do PTO (tomada de força)", example: "120.5", pragmaticUse: "Importante para máquinas com implementos hidráulicos ou elétricos auxiliares" },
           { field: "FuelUsed.FuelUnits", type: "String", description: "Unidade de medida do combustível", example: '"Liters"', pragmaticUse: "Interpretação correta do volume de combustível" },
           { field: "FuelUsed.FuelConsumed", type: "Double", description: "Volume total de combustível consumido", example: "1500.0", pragmaticUse: "Cálculo de custos operacionais e emissões de CO₂" },
+          { field: "FuelUsedLast24.FuelConsumed", type: "Double", description: "[ISO 15143-3] Combustível consumido nas últimas 24 horas (janela deslizante)", example: "45.5", pragmaticUse: "Relatórios diários de consumo — útil para custos operacionais e análise de eficiência" },
           { field: "FuelRemaining.Percent", type: "Double", description: "Percentual de combustível restante no tanque", example: "75.5", pragmaticUse: "Alerta de baixo nível e planejamento de abastecimento em campo" },
+          { field: "FuelRemaining.FuelTankCapacity", type: "Double", description: "[ISO 15143-3] Capacidade total do tanque de combustível em litros", example: "200.0", pragmaticUse: "Conversão de % em volume real e cálculo de autonomia" },
           { field: "FuelRemaining.Timestamp", type: "DateTime", description: "Data/hora da leitura de combustível", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Validação da atualidade dos dados de combustível" },
           { field: "DEFRemaining.Percent", type: "Double", description: "Percentual de DEF/AdBlue restante no tanque", example: "80.0", pragmaticUse: "Prevenção de derate automático em motores Tier 4 Final e Stage V" },
+          { field: "DEFRemaining.DEFTankCapacity", type: "Double", description: "[ISO 15143-3] Capacidade total do tanque de DEF em litros", example: "50.0", pragmaticUse: "Conversão de % em volume real e cálculo de autonomia de DEF" },
           { field: "DEFRemaining.Timestamp", type: "DateTime", description: "Data/hora da leitura de DEF", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Monitoramento contínuo do nível de DEF para conformidade ambiental" },
           { field: "Distance.Odometer", type: "Double", description: "Leitura do hodômetro em km", example: "12345.6", pragmaticUse: "Manutenção baseada em distância e controle de depreciação" },
           { field: "Distance.Timestamp", type: "DateTime", description: "Data/hora da leitura do hodômetro", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Registro da última atualização do hodômetro" },
           { field: "CumulativePayloadTotal.Payload", type: "Double", description: "Carga total acumulada transportada (toneladas)", example: "5000.0", pragmaticUse: "Cálculo de produtividade: toneladas movidas por hora" },
           { field: "CumulativeLoadCount.LoadCount", type: "Integer", description: "Número total de ciclos de carga", example: "250", pragmaticUse: "Benchmarking de produção e análise de ciclos de trabalho" },
           { field: "MaxSpeed.Speed", type: "Double", description: "Velocidade máxima registrada no período", example: "35.0", pragmaticUse: "Controle de velocidade e conformidade com políticas de segurança" },
-          { field: "AverageFuelConsumption.FuelConsumed", type: "Double", description: "Consumo médio de combustível (L/h)", example: "18.5", pragmaticUse: "Análise de eficiência de combustível e benchmarking" },
+          { field: "MaximumSpeedLast24.Speed", type: "Double", description: "[ISO 15143-3] Velocidade máxima nas últimas 24 horas (janela deslizante)", example: "38.5", pragmaticUse: "Análise de comportamento de condução — diferente de MaxSpeed geral" },
+          { field: "AverageLoadFactorLast24.LoadFactor", type: "Double", description: "[ISO 15143-3] Fator médio de carga do motor nas últimas 24h (%)", example: "72.3", pragmaticUse: "Análise de intensidade de trabalho — alta carga indica maior desgaste" },
+          { field: "AverageFuelConsumption.FuelConsumed", type: "Double", description: "[Hitachi P-API Proprietário] Consumo médio de combustível (L/h)", example: "18.5", pragmaticUse: "Análise de eficiência de combustível e benchmarking" },
         ],
         jsonExample: `{
   "EquipmentHeader": {
@@ -731,20 +741,72 @@ export const apiData: ApiCategory[] = [
         notes: "DEFRemaining (AdBlue) é crítico para motores Tier 4 Final e Stage V. Abaixo de 10% o motor pode entrar em modo derate reduzindo a potência.",
       },
       {
+        id: "hitachi-fault-codes",
+        method: "GET",
+        path: "/telematics/v1/faultcodes",
+        description:
+          "[ISO 15143-3 Timeseries] Retorna códigos de falha ativos (DTC) com identificador, descrição, severidade e fonte. Histórico de até 14 dias. Essencial para diagnóstico remoto e manutenção preventiva.",
+        fields: [
+          { field: "EquipmentID", type: "String", description: "ID do equipamento", example: '"EQP-001"', pragmaticUse: "Identificação do equipamento" },
+          { field: "Timestamp", type: "DateTime", description: "Data/hora da falha", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Ordenação cronológica das falhas" },
+          { field: "FaultCode", type: "String", description: "Código de falha (DTC) — ex: P0101, P0102", example: '"P0101"', pragmaticUse: "Identificação do tipo de falha para diagnóstico" },
+          { field: "FaultDescription", type: "String", description: "Descrição textual da falha", example: '"Mass Airflow Sensor Circuit Range/Performance"', pragmaticUse: "Compreensão do problema em linguagem natural" },
+          { field: "Severity", type: "String", description: "Nível de severidade: CRITICAL, HIGH, MEDIUM, LOW", example: '"HIGH"', pragmaticUse: "Priorização de manutenção — CRITICAL requer ação imediata" },
+          { field: "Source", type: "String", description: "Origem da falha: Engine, Transmission, Hydraulic, Electrical", example: '"Engine"', pragmaticUse: "Localização do sistema afetado" },
+          { field: "OccurrenceCount", type: "Integer", description: "Número de ocorrências da falha", example: "3", pragmaticUse: "Identificação de problemas intermitentes vs. persistentes" },
+        ],
+        jsonExample: `{
+  "FaultCodes": [{
+    "EquipmentID": "EQP-001",
+    "Timestamp": "2023-04-05T12:00:00Z",
+    "FaultCode": "P0101",
+    "FaultDescription": "Mass Airflow Sensor Circuit Range/Performance",
+    "Severity": "HIGH",
+    "Source": "Engine",
+    "OccurrenceCount": 3
+  }]
+}`,
+        notes: "Campos com prefixo [ISO 15143-3] são padrão. Campos com [Hitachi P-API Proprietário] são extensões Hitachi não disponíveis em outras OEMs.",
+      },
+      {
+        id: "hitachi-switch-status",
+        method: "GET",
+        path: "/telematics/v1/switchstatus",
+        description:
+          "[ISO 15143-3 Timeseries] Retorna o estado de entradas digitais (interruptores, sensores) — ex: PTO ativo, porta aberta, modo trabalho. Timeseries com histórico completo.",
+        fields: [
+          { field: "EquipmentID", type: "String", description: "ID do equipamento", example: '"EQP-001"', pragmaticUse: "Identificação do equipamento" },
+          { field: "Timestamp", type: "DateTime", description: "Data/hora da mudança de estado", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Ordenação cronológica das mudanças" },
+          { field: "SwitchName", type: "String", description: "Nome do interruptor/sensor", example: '"PTO_Active", "Door_Open", "WorkMode"', pragmaticUse: "Identificação do componente monitorado" },
+          { field: "SwitchState", type: "Boolean", description: "Estado do interruptor: true (ativo) ou false (inativo)", example: "true", pragmaticUse: "Detecção de mudanças de estado em tempo real" },
+          { field: "Duration", type: "Double", description: "Duração do estado em minutos", example: "45.5", pragmaticUse: "Análise de tempo de operação de implementos" },
+        ],
+        jsonExample: `{
+  "SwitchStatus": [{
+    "EquipmentID": "EQP-001",
+    "Timestamp": "2023-04-05T12:00:00Z",
+    "SwitchName": "PTO_Active",
+    "SwitchState": true,
+    "Duration": 45.5
+  }]
+}`,
+        notes: "Timeseries obrigatório do padrão ISO 15143-3. Monitora estado de implementos e entradas digitais.",
+      },
+      {
         id: "hitachi-timeseries",
         method: "GET",
         path: "/telematics/v1/timeseries",
         description:
-          "Retorna dados históricos de telemetria em série temporal para um equipamento específico. Permite análise de tendências ao longo do tempo.",
+          "Retorna dados históricos de telemetria em série temporal para um equipamento específico. Permite análise de tendências ao longo do tempo. Inclui dados ISO padrão e extensões proprietárias Hitachi.",
         fields: [
           { field: "EquipmentID", type: "String", description: "ID do equipamento", example: '"EQP-001"', pragmaticUse: "Identificação do equipamento nos dados históricos" },
           { field: "Timestamp", type: "DateTime", description: "Data/hora da leitura", example: '"2023-04-05T12:00:00Z"', pragmaticUse: "Ordenação cronológica dos dados históricos" },
-          { field: "OperatingHours", type: "Double", description: "Horas de operação no momento da leitura", example: "1234.5", pragmaticUse: "Análise de tendência de uso ao longo do tempo" },
-          { field: "FuelLevel", type: "Double", description: "Nível de combustível no momento da leitura (%)", example: "75.5", pragmaticUse: "Análise de padrões de consumo de combustível" },
-          { field: "DEFLevel", type: "Double", description: "Nível de DEF/AdBlue no momento da leitura (%)", example: "80.0", pragmaticUse: "Monitoramento da taxa de consumo de DEF" },
-          { field: "EngineRPM", type: "Integer", description: "Rotações por minuto do motor", example: "1800", pragmaticUse: "Análise de carga do motor e eficiência operacional" },
-          { field: "CoolantTemp", type: "Integer", description: "Temperatura do líquido de arrefecimento (°C)", example: "90", pragmaticUse: "Prevenção de superaquecimento e diagnóstico" },
-          { field: "HydraulicOilTemp", type: "Integer", description: "Temperatura do óleo hidráulico (°C)", example: "65", pragmaticUse: "Monitoramento do sistema hidráulico" },
+          { field: "OperatingHours", type: "Double", description: "[ISO 15143-3] Horas de operação no momento da leitura", example: "1234.5", pragmaticUse: "Análise de tendência de uso ao longo do tempo" },
+          { field: "FuelLevel", type: "Double", description: "[ISO 15143-3] Nível de combustível no momento da leitura (%)", example: "75.5", pragmaticUse: "Análise de padrões de consumo de combustível" },
+          { field: "DEFLevel", type: "Double", description: "[ISO 15143-3] Nível de DEF/AdBlue no momento da leitura (%)", example: "80.0", pragmaticUse: "Monitoramento da taxa de consumo de DEF" },
+          { field: "EngineRPM", type: "Integer", description: "[Hitachi P-API Proprietário] Rotações por minuto do motor", example: "1800", pragmaticUse: "Análise de carga do motor e eficiência operacional" },
+          { field: "CoolantTemp", type: "Integer", description: "[Hitachi P-API Proprietário] Temperatura do líquido de arrefecimento (°C)", example: "90", pragmaticUse: "Prevenção de superaquecimento e diagnóstico" },
+          { field: "HydraulicOilTemp", type: "Integer", description: "[Hitachi P-API Proprietário] Temperatura do óleo hidráulico (°C)", example: "65", pragmaticUse: "Monitoramento do sistema hidráulico" },
         ],
         jsonExample: `{
   "TimeSeries": [{
@@ -758,6 +820,7 @@ export const apiData: ApiCategory[] = [
     "HydraulicOilTemp": 65
   }]
 }`,
+        notes: "Campos com prefixo [ISO 15143-3] são padrão. Campos com [Hitachi P-API Proprietário] são extensões Hitachi não disponíveis em outras OEMs.",
       },
     ],
   },
